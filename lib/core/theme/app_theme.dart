@@ -462,7 +462,7 @@ abstract final class AppTheme {
         thumbColor: scheme.primary,
         overlayColor: scheme.primary.withValues(alpha: 0.12),
         trackHeight: 4,
-        rangeThumbShape: const RoundRangeSliderThumbShape(enabledThumbRadius: 10),
+        rangeThumbShape: const RoundRangeSliderThumbShape(),
       ),
 
       // ── List tiles (settings, booking history) ───────────────────────────
