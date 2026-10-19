@@ -14,7 +14,7 @@ abstract final class AppSpacing {
   static const double lg = 24;
   static const double xl = 32;
 
-  /// Horizontal screen margin (1.25rem).
+  /// Horizontal screen margin (matches the design's 20dp page inset).
   static const double screenMargin = 20;
   static const double gutter = 16;
 
@@ -22,18 +22,22 @@ abstract final class AppSpacing {
   static const EdgeInsets screenPadding = EdgeInsets.symmetric(horizontal: screenMargin);
 }
 
-/// Corner radii.
+/// Corner radii (read from the design: photos/cards are very round).
 abstract final class AppRadius {
-  static const double sm = 4;
+  static const double sm = 6;
   static const double base = 8;
-  static const double md = 12; // attachment tiles
-  static const double lg = 16; // cards, fields
-  static const double dialog = 20;
-  static const double xl = 24; // sheets
+  static const double md = 12; // amenity tiles, thumbnails
+  static const double lg = 16; // buttons, fields, chips, calendar
+  static const double card = 20; // hotel cards, schedule cards
+  static const double photo = 24; // hero photo on detail screen
+  static const double dialog = 24;
+  static const double xl = 28; // sheets
   static const double pill = 9999;
 
   static const BorderRadius mdAll = BorderRadius.all(Radius.circular(md));
   static const BorderRadius lgAll = BorderRadius.all(Radius.circular(lg));
+  static const BorderRadius cardAll = BorderRadius.all(Radius.circular(card));
+  static const BorderRadius photoAll = BorderRadius.all(Radius.circular(photo));
   static const BorderRadius dialogAll = BorderRadius.all(Radius.circular(dialog));
   static const BorderRadius pillAll = BorderRadius.all(Radius.circular(pill));
   static const BorderRadius sheetTop = BorderRadius.vertical(
@@ -41,42 +45,40 @@ abstract final class AppRadius {
   );
 }
 
-/// Ambient, teal-tinted shadows. Dark mode uses surface tiers instead,
-/// so these return an empty list there.
+/// Very soft, neutral ambient shadows (the design's cards float on white with
+/// a barely-there blur). Dark mode uses surface tiers instead, so these
+/// return an empty list there.
 abstract final class AppShadows {
+  /// Hotel / schedule cards.
   static List<BoxShadow> level1(BuildContext context) => _isDark(context)
       ? const []
       : const [
           BoxShadow(
-            color: Color(0x0A1D4E5B), // 4 %
-            blurRadius: 8,
-            spreadRadius: -2,
-            offset: Offset(0, 2),
-          ),
-          BoxShadow(
-            color: Color(0x081D4E5B), // 3 %
-            blurRadius: 16,
-            offset: Offset(0, 4),
+            color: Color(0x0F101010), // 6 %
+            blurRadius: 24,
+            spreadRadius: -4,
+            offset: Offset(0, 6),
           ),
         ];
 
+  /// Floating elements (favorite button on photos, sticky booking bar).
   static List<BoxShadow> level2(BuildContext context) => _isDark(context)
       ? const []
       : const [
           BoxShadow(
-            color: Color(0x141D4E5B), // 8 %
+            color: Color(0x1A101010), // 10 %
             blurRadius: 20,
             spreadRadius: -4,
             offset: Offset(0, 4),
           ),
         ];
 
-  /// Voice button and sheets.
+  /// Sheets and primary call-to-action glow.
   static List<BoxShadow> level3(BuildContext context) => _isDark(context)
       ? const []
       : const [
           BoxShadow(
-            color: Color(0x291D4E5B), // 16 %
+            color: Color(0x294C4DDC), // 16 % indigo
             blurRadius: 32,
             spreadRadius: -4,
             offset: Offset(0, 8),
@@ -90,26 +92,22 @@ abstract final class AppShadows {
 /// by swapping these durations for [Duration.zero].
 abstract final class AppMotion {
   static const Duration fast = Duration(milliseconds: 120); // press feedback
-  static const Duration base = Duration(milliseconds: 200); // chips, switches
+  static const Duration base = Duration(milliseconds: 200); // chips, favorite toggle
   static const Duration slow = Duration(milliseconds: 320); // sheets, pages
-  static const Duration voicePulse = Duration(milliseconds: 1600);
 
   static const Curve standard = Curves.easeInOutCubic;
   static const Curve enter = Curves.easeOutCubic;
   static const Curve exit = Curves.easeInCubic;
-
-  /// Organic breathing of the listening rings.
-  static const Curve pulse = Curves.easeInOutSine;
 }
 
-/// Entry point: `MaterialApp(theme: AppTheme.light, darkTheme: AppTheme.dark)`.
+/// Entry point:
 abstract final class AppTheme {
   static ThemeData get light => _build(AppColors.lightScheme, AppSemanticColors.light);
 
   static ThemeData get dark => _build(AppColors.darkScheme, AppSemanticColors.dark);
 
   static const double _minTarget = 48;
-  static const double _controlHeight = 52;
+  static const double _controlHeight = 56; // design buttons are tall
 
   static ThemeData _build(ColorScheme scheme, AppSemanticColors semantic) {
     final bool isDark = scheme.brightness == Brightness.dark;
@@ -126,13 +124,16 @@ abstract final class AppTheme {
       );
     }
 
+    const RoundedRectangleBorder buttonShape = RoundedRectangleBorder(
+      borderRadius: AppRadius.lgAll,
+    );
+
     return ThemeData(
       useMaterial3: true,
       brightness: scheme.brightness,
       colorScheme: scheme,
       scaffoldBackgroundColor: scheme.surface,
       canvasColor: scheme.surface,
-      fontFamily: AppTypography.fontFamily,
       textTheme: text,
       primaryTextTheme: text,
       extensions: <ThemeExtension<dynamic>>[semantic],
@@ -156,13 +157,13 @@ abstract final class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
-        centerTitle: false,
+        centerTitle: true,
         titleTextStyle: text.titleMedium,
         iconTheme: IconThemeData(color: scheme.onSurface, size: 24.sp),
         systemOverlayStyle: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       ),
 
-      // ── Cards ────────────────────────────────────────────────────────────
+      // ── Cards (hotel / schedule cards: white, 20dp, hairline border) ─────
       cardTheme: CardThemeData(
         color: scheme.surfaceContainerLowest,
         elevation: 0,
@@ -170,31 +171,41 @@ abstract final class AppTheme {
         surfaceTintColor: Colors.transparent,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.lgAll,
-          side: BorderSide(color: scheme.outlineVariant),
+          borderRadius: AppRadius.cardAll,
+          side: BorderSide(color: isDark ? scheme.outlineVariant : Colors.transparent),
         ),
       ),
 
-      // ── Buttons (pill, 52dp tall) ────────────────────────────────────────
+      // ── Buttons (16dp radius, 56dp tall — matches the design's 4 states) ─
+      // primary  → FilledButton            (indigo fill, white label)
+      // tonal    → FilledButton.tonal      (lavender fill, indigo label)
+      // outlined → OutlinedButton          (hairline border, ink label)
+      // disabled → any, with onPressed: null (light-grey fill)
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: const Size(88, _controlHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          shape: const StadiumBorder(),
+          shape: buttonShape,
           textStyle: text.labelLarge,
+          iconSize: 24.sp,
           elevation: 0,
+          backgroundColor: scheme.primary,
+          foregroundColor: scheme.onPrimary,
+          disabledBackgroundColor: scheme.surfaceContainerHighest,
+          disabledForegroundColor: scheme.onSurface.withValues(alpha: 0.38),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(88, _controlHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          shape: const StadiumBorder(),
+          shape: buttonShape,
           textStyle: text.labelLarge,
-          iconColor: scheme.onPrimary,
           iconSize: 24.sp,
           backgroundColor: scheme.primary,
           foregroundColor: scheme.onPrimary,
+          disabledBackgroundColor: scheme.surfaceContainerHighest,
+          disabledForegroundColor: scheme.onSurface.withValues(alpha: 0.38),
           elevation: 0,
           shadowColor: Colors.transparent,
         ),
@@ -203,21 +214,21 @@ abstract final class AppTheme {
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(88, _controlHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          shape: const StadiumBorder(),
+          shape: buttonShape,
           textStyle: text.labelLarge,
           iconSize: 24.sp,
-          iconColor: scheme.onPrimary,
-          foregroundColor: scheme.primary,
-          side: BorderSide(color: scheme.outline),
+          foregroundColor: scheme.onSurface,
+          disabledForegroundColor: scheme.onSurface.withValues(alpha: 0.38),
+          side: BorderSide(color: scheme.outlineVariant),
           shadowColor: Colors.transparent,
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           minimumSize: const Size(64, _minTarget),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          shape: const StadiumBorder(),
-          textStyle: text.labelLarge,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          shape: buttonShape,
+          textStyle: text.labelMedium, // "See all", "Read More…"
           iconSize: 24.sp,
           foregroundColor: scheme.primary,
           shadowColor: Colors.transparent,
@@ -232,30 +243,30 @@ abstract final class AppTheme {
 
       // ── Text fields ──────────────────────────────────────────────────────
       // The enabled border uses `outline` (>= 3:1), not the pale card border,
-      // so fields stay visible for older users (WCAG 1.4.11).
+      // so fields stay visible (WCAG 1.4.11).
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: scheme.surfaceContainerLow,
         isDense: false,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
-          vertical: 13,
+          vertical: 16,
         ),
         constraints: const BoxConstraints(minHeight: _controlHeight),
         labelStyle: text.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
         floatingLabelStyle: text.bodyMedium?.copyWith(color: scheme.primary),
-        hintStyle: text.bodyLarge?.copyWith(color: scheme.onSurface.withValues(alpha: 0.50)),
+        hintStyle: text.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
         helperStyle: text.bodySmall?.copyWith(color: scheme.onSurfaceVariant),
         errorStyle: text.bodySmall?.copyWith(color: scheme.error),
         errorMaxLines: 3,
         prefixIconColor: scheme.onSurfaceVariant,
         suffixIconColor: scheme.onSurfaceVariant,
-        border: fieldBorder(scheme.outline.withValues(alpha: 0.50)),
-        enabledBorder: fieldBorder(scheme.outline.withValues(alpha: 0.50)),
+        border: fieldBorder(scheme.outlineVariant),
+        enabledBorder: fieldBorder(scheme.outlineVariant),
         focusedBorder: fieldBorder(scheme.primary, width: 2),
         errorBorder: fieldBorder(scheme.error),
         focusedErrorBorder: fieldBorder(scheme.error, width: 2),
-        disabledBorder: fieldBorder(scheme.outlineVariant),
+        disabledBorder: fieldBorder(scheme.outlineVariant.withValues(alpha: 0.5)),
       ),
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: scheme.primary,
@@ -263,7 +274,7 @@ abstract final class AppTheme {
         selectionHandleColor: scheme.primary,
       ),
 
-      // ── Search bar (pill) ────────────────────────────────────────────────
+      // ── Search bar ───────────────────────────────────────────────────────
       searchBarTheme: SearchBarThemeData(
         elevation: const WidgetStatePropertyAll<double>(0),
         backgroundColor: WidgetStatePropertyAll<Color>(scheme.surfaceContainerLow),
@@ -273,7 +284,10 @@ abstract final class AppTheme {
           EdgeInsets.symmetric(horizontal: 16),
         ),
         shape: WidgetStatePropertyAll<OutlinedBorder>(
-          StadiumBorder(side: BorderSide(color: scheme.outline)),
+          RoundedRectangleBorder(
+            borderRadius: AppRadius.lgAll,
+            side: BorderSide(color: scheme.outlineVariant),
+          ),
         ),
         textStyle: WidgetStatePropertyAll<TextStyle?>(text.bodyLarge),
         hintStyle: WidgetStatePropertyAll<TextStyle?>(
@@ -281,16 +295,24 @@ abstract final class AppTheme {
         ),
       ),
 
-      // ── Chips (36dp pill; tap target stays 48dp via MaterialTapTargetSize) ─
+      // ── Chips (property-type selector: Hotel / Homestay / Apartment…) ────
+      // Selected = solid indigo with white label; idle = soft tinted fill.
       chipTheme: ChipThemeData(
-        shape: StadiumBorder(side: BorderSide(color: scheme.outlineVariant)),
-        side: BorderSide(color: scheme.outlineVariant),
-        backgroundColor: scheme.surface,
-        selectedColor: scheme.primaryContainer,
-        checkmarkColor: scheme.onPrimaryContainer,
-        labelStyle: text.labelMedium,
-        padding: const EdgeInsets.symmetric(horizontal: 6),
-        labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
+        side: BorderSide.none,
+        backgroundColor: semantic.amenityFill,
+        selectedColor: scheme.primary,
+        disabledColor: scheme.surfaceContainerHighest,
+        showCheckmark: false,
+        checkmarkColor: scheme.onPrimary,
+        iconTheme: IconThemeData(size: 20, color: scheme.onSurface),
+        labelStyle: WidgetStateTextStyle.resolveWith(
+          (Set<WidgetState> states) => text.labelMedium!.copyWith(
+            color: states.contains(WidgetState.selected) ? scheme.onPrimary : scheme.onSurfaceVariant,
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 6),
         elevation: 0,
         pressElevation: 0,
         surfaceTintColor: Colors.transparent,
@@ -306,7 +328,7 @@ abstract final class AppTheme {
         modalElevation: 0,
         showDragHandle: true,
         dragHandleSize: const Size(48, 5),
-        dragHandleColor: scheme.outline,
+        dragHandleColor: scheme.outlineVariant,
         clipBehavior: Clip.antiAlias,
         shape: const RoundedRectangleBorder(borderRadius: AppRadius.sheetTop),
       ),
@@ -336,9 +358,9 @@ abstract final class AppTheme {
         shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
       ),
 
-      // ── Bottom navigation (64dp) ─────────────────────────────────────────
+      // ── Bottom navigation (72dp, indigo selected) ────────────────────────
       navigationBarTheme: NavigationBarThemeData(
-        height: 64,
+        height: 72,
         elevation: 0,
         backgroundColor: scheme.surfaceContainerLowest,
         surfaceTintColor: Colors.transparent,
@@ -346,18 +368,60 @@ abstract final class AppTheme {
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>(
           (Set<WidgetState> states) => text.labelMedium?.copyWith(
-            color: states.contains(WidgetState.selected) ? scheme.onSurface : scheme.onSurfaceVariant,
+            color: states.contains(WidgetState.selected) ? scheme.primary : scheme.onSurfaceVariant,
           ),
         ),
         iconTheme: WidgetStateProperty.resolveWith<IconThemeData?>(
           (Set<WidgetState> states) => IconThemeData(
             size: 24,
-            color: states.contains(WidgetState.selected) ? scheme.onPrimaryContainer : scheme.onSurfaceVariant,
+            color: states.contains(WidgetState.selected) ? scheme.primary : scheme.onSurfaceVariant,
           ),
         ),
       ),
 
-      // ── Switch ───────────────────────────────────────────────────────────
+      // ── Tabs ─────────────────────────────────────────────────────────────
+      tabBarTheme: TabBarThemeData(
+        labelColor: scheme.primary,
+        unselectedLabelColor: scheme.onSurfaceVariant,
+        labelStyle: text.labelMedium,
+        unselectedLabelStyle: text.labelMedium,
+        indicatorColor: scheme.primary,
+        indicatorSize: TabBarIndicatorSize.label,
+        dividerColor: scheme.outlineVariant,
+      ),
+
+      // ── Calendar / date range picker (booking dates) ─────────────────────
+      // Selected day = solid indigo circle, white label (as in the design).
+      // Range middle = lavender band.
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: semantic.calendarFill,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadius.dialogAll),
+        headerBackgroundColor: semantic.calendarFill,
+        headerForegroundColor: scheme.onSurface,
+        weekdayStyle: text.labelMedium,
+        dayStyle: text.labelMedium,
+        yearStyle: text.labelMedium,
+        dayForegroundColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) return scheme.onPrimary;
+            if (states.contains(WidgetState.disabled)) return scheme.onSurface.withValues(alpha: 0.38);
+            return scheme.onSurface;
+          },
+        ),
+        dayBackgroundColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) => states.contains(WidgetState.selected) ? scheme.primary : Colors.transparent,
+        ),
+        todayForegroundColor: WidgetStatePropertyAll<Color>(scheme.primary),
+        todayBorder: BorderSide(color: scheme.primary),
+        rangePickerBackgroundColor: semantic.calendarFill,
+        rangeSelectionBackgroundColor: scheme.primaryContainer,
+        confirmButtonStyle: TextButton.styleFrom(foregroundColor: scheme.primary),
+        cancelButtonStyle: TextButton.styleFrom(foregroundColor: scheme.onSurfaceVariant),
+      ),
+
+      // ── Selection controls ───────────────────────────────────────────────
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith<Color?>(
           (Set<WidgetState> states) {
@@ -379,8 +443,29 @@ abstract final class AppTheme {
           (Set<WidgetState> states) => states.contains(WidgetState.selected) ? Colors.transparent : scheme.outline,
         ),
       ),
+      checkboxTheme: CheckboxThemeData(
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(6))),
+        side: BorderSide(color: scheme.outline, width: 1.5),
+        fillColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) => states.contains(WidgetState.selected) ? scheme.primary : Colors.transparent,
+        ),
+        checkColor: WidgetStatePropertyAll<Color>(scheme.onPrimary),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) => states.contains(WidgetState.selected) ? scheme.primary : scheme.outline,
+        ),
+      ),
+      sliderTheme: SliderThemeData(
+        activeTrackColor: scheme.primary,
+        inactiveTrackColor: scheme.primaryContainer,
+        thumbColor: scheme.primary,
+        overlayColor: scheme.primary.withValues(alpha: 0.12),
+        trackHeight: 4,
+        rangeThumbShape: const RoundRangeSliderThumbShape(enabledThumbRadius: 10),
+      ),
 
-      // ── List tiles (settings, activity log) ──────────────────────────────
+      // ── List tiles (settings, booking history) ───────────────────────────
       listTileTheme: ListTileThemeData(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         minVerticalPadding: 12,
@@ -399,7 +484,7 @@ abstract final class AppTheme {
       ),
 
       badgeTheme: BadgeThemeData(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 6),
         textStyle: text.labelSmall,
         backgroundColor: scheme.primary,
         textColor: scheme.onPrimary,
@@ -407,8 +492,8 @@ abstract final class AppTheme {
 
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: scheme.primary,
-        linearTrackColor: scheme.surfaceContainerHighest,
-        circularTrackColor: scheme.surfaceContainerHighest,
+        linearTrackColor: scheme.primaryContainer,
+        circularTrackColor: scheme.primaryContainer,
       ),
 
       tooltipTheme: TooltipThemeData(
@@ -424,8 +509,9 @@ abstract final class AppTheme {
         backgroundColor: scheme.primary,
         foregroundColor: scheme.onPrimary,
         iconSize: 24,
+        elevation: 0,
         shape: const RoundedRectangleBorder(
-          borderRadius: AppRadius.dialogAll,
+          borderRadius: AppRadius.lgAll,
         ),
       ),
     );

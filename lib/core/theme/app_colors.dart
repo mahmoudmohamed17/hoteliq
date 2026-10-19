@@ -1,163 +1,119 @@
 import 'package:flutter/material.dart';
 
-/// Raw palette + Material 3 [ColorScheme]s for "Serene Trust".
+/// Raw palette + Material 3 [ColorScheme]s for Hoteliq.
+///
+/// Source: Nam Design "Color Guide" (5 swatches) + the Home / Detail /
+/// Schedule screens. Everything else (error, status, dark mode) is derived
+/// from those swatches because the design file does not define it.
 ///
 /// Rule of thumb: widgets should read colors from `Theme.of(context)`
 /// (`colorScheme`) or `context.appColors` — never from this class directly.
 /// The raw constants exist so the theme layer has one source of truth.
 abstract final class AppColors {
-  // ── Brand ────────────────────────────────────────────────────────────────
-  static const Color primary = Color(0xFF1D4E5B); // Deep Slate Teal
-  static const Color secondary = Color(0xFFB45309); // Royal Bronze Amber
-  static const Color tertiary = Color(0xFF476355); // Olive Slate
+  // ── Brand (from the design's Color Guide) ────────────────────────────────
+  static const Color primary = Color(0xFF4C4DDC); // 01 · Indigo
+  static const Color primaryTint = Color(0xFFE4E4FA); // 02 · Soft Lavender
+  static const Color ink = Color(0xFF101010); // 03 · Near Black
+  static const Color primarySoft = Color(0xFFC8C8F4); // 04 · Periwinkle
+  static const Color disabledFill = Color(0xFFE1E1E1); // 05 · Light Grey
 
-  // ── Light neutrals ───────────────────────────────────────────────────────
-  static const Color canvas = Color(0xFFF4F3EF); // Warm Linen / Parchment
+  // ── Light neutrals (read from the screens) ───────────────────────────────
+  static const Color canvas = Color(0xFFFFFFFF); // screen background
   static const Color card = Color(0xFFFFFFFF);
-  static const Color fieldFill = Color(0xFFFBFBFA);
-  static const Color border = Color(0xFFE5E5DF);
-  static const Color onSurface = Color(0xFF1B1C1A);
-  static const Color onSurfaceVariant = Color(0xFF40484B);
-  static const Color outline = Color(0xFF71787B);
+  static const Color chipFill = Color(0xFFF7F7FC); // amenity tiles, idle chips
+  static const Color calendarFill = Color(0xFFFAFAFA); // calendar card
+  static const Color border = Color(0xFFE1E1E1);
+  static const Color onSurfaceVariant = Color(0xFF6B6B76); // secondary text
+  static const Color outline = Color(0xFF8A8A96);
 
-  // ── Dark neutrals ────────────────────────────────────────────────────────
-  static const Color darkBg = Color(0xFF0F172A); // Deep Obsidian
-  static const Color darkSurface = Color(0xFF1E293B); // cards
-  static const Color darkOverlay = Color(0xFF334155); // dialogs / sheets
-  static const Color darkBorder = Color(0xFF334155);
+  // ── Accents seen in the UI ───────────────────────────────────────────────
+  static const Color star = Color(0xFFFFC107); // rating star
+  static const Color heart = Color(0xFFE53935); // favorite heart
 
-  /// Modal scrim: rgba(15, 23, 42, 0.45)
-  static const Color scrim = Color(0x730F172A);
+  // ── Dark neutrals (derived, not in the design) ───────────────────────────
+  static const Color darkBg = Color(0xFF101010);
+  static const Color darkSurface = Color(0xFF1A1A22);
+  static const Color darkOverlay = Color(0xFF24242E);
+  static const Color darkBorder = Color(0xFF2E2E3A);
+
+  /// Modal scrim: rgba(16, 16, 16, 0.45)
+  static const Color scrim = Color(0x73101010);
 
   // ── Material 3 color schemes ─────────────────────────────────────────────
   static const ColorScheme lightScheme = ColorScheme(
     brightness: Brightness.light,
     primary: primary,
     onPrimary: Color(0xFFFFFFFF),
-    primaryContainer: Color(0xFFBBEAFA),
-    onPrimaryContainer: Color(0xFF001F27),
-    secondary: secondary,
+    primaryContainer: primaryTint,
+    onPrimaryContainer: primary, // tonal button: indigo text on lavender
+    secondary: Color(0xFF5E5F9E),
     onSecondary: Color(0xFFFFFFFF),
-    secondaryContainer: Color(0xFFFFDBCA),
-    onSecondaryContainer: Color(0xFF331200),
-    tertiary: tertiary,
+    secondaryContainer: primarySoft,
+    onSecondaryContainer: Color(0xFF1B1C5E),
+    tertiary: Color(0xFFB45309), // amber, used for warm highlights
     onTertiary: Color(0xFFFFFFFF),
-    tertiaryContainer: Color(0xFFCAEAD8),
-    onTertiaryContainer: Color(0xFF042015),
-    error: Color(0xFFBA1A1A),
+    tertiaryContainer: Color(0xFFFEF3C7),
+    onTertiaryContainer: Color(0xFF78350F),
+    error: Color(0xFFD32F2F),
     onError: Color(0xFFFFFFFF),
-    errorContainer: Color(0xFFFFDAD6),
-    onErrorContainer: Color(0xFF93000A),
+    errorContainer: Color(0xFFFEE2E2),
+    onErrorContainer: Color(0xFF7F1D1D),
     surface: canvas,
-    onSurface: onSurface,
+    onSurface: ink,
     onSurfaceVariant: onSurfaceVariant,
-    surfaceDim: Color(0xFFDBDAD6),
+    surfaceDim: Color(0xFFEDEDF2),
     surfaceBright: canvas,
     surfaceContainerLowest: card,
-    surfaceContainerLow: fieldFill,
-    surfaceContainer: Color(0xFFEFEEEA),
-    surfaceContainerHigh: Color(0xFFE9E8E4),
-    surfaceContainerHighest: Color(0xFFE3E2DF),
+    surfaceContainerLow: chipFill,
+    surfaceContainer: calendarFill,
+    surfaceContainerHigh: Color(0xFFF1F1F6),
+    surfaceContainerHighest: disabledFill,
     outline: outline,
     outlineVariant: border,
-    shadow: primary,
-    scrim: Color(0xFF0F172A),
-    inverseSurface: Color(0xFF30312E),
-    onInverseSurface: Color(0xFFF2F1ED),
-    inversePrimary: Color(0xFF9FCEDD),
+    shadow: Color(0xFF000000),
+    scrim: Color(0xFF101010),
+    inverseSurface: Color(0xFF26262E),
+    onInverseSurface: Color(0xFFF4F4F8),
+    inversePrimary: Color(0xFF9B9CF2),
     surfaceTint: Colors.transparent, // no M3 tint overlay on elevation
   );
 
   static const ColorScheme darkScheme = ColorScheme(
     brightness: Brightness.dark,
-    primary: Color(0xFF2DD4BF),
-    onPrimary: Color(0xFF04222A),
-    primaryContainer: primary,
-    onPrimaryContainer: Color(0xFFBBEAFA),
-    secondary: Color(0xFFFDBA74),
-    onSecondary: Color(0xFF331200),
-    secondaryContainer: Color(0xFF763300),
-    onSecondaryContainer: Color(0xFFFFDBCA),
-    tertiary: Color(0xFFAFCEBC),
-    onTertiary: Color(0xFF042015),
-    tertiaryContainer: Color(0xFF314C3F),
-    onTertiaryContainer: Color(0xFFCAEAD8),
+    primary: Color(0xFF9B9CF2),
+    onPrimary: Color(0xFF12125E),
+    primaryContainer: Color(0xFF34358F),
+    onPrimaryContainer: primaryTint,
+    secondary: Color(0xFFB9BAE8),
+    onSecondary: Color(0xFF1B1C5E),
+    secondaryContainer: Color(0xFF42437A),
+    onSecondaryContainer: primarySoft,
+    tertiary: Color(0xFFFCD34D),
+    onTertiary: Color(0xFF3A2A08),
+    tertiaryContainer: Color(0xFF5C3A08),
+    onTertiaryContainer: Color(0xFFFEF3C7),
     error: Color(0xFFFFB4AB),
     onError: Color(0xFF690005),
     errorContainer: Color(0xFF93000A),
     onErrorContainer: Color(0xFFFFDAD6),
     surface: darkBg,
-    onSurface: Color(0xFFE2E8F0),
-    onSurfaceVariant: Color(0xFFAAB8CC),
-    surfaceDim: Color(0xFF0B1120),
-    surfaceBright: Color(0xFF283548),
-    surfaceContainerLowest: Color(0xFF0B1120),
-    surfaceContainerLow: Color(0xFF172033),
+    onSurface: Color(0xFFF2F2F7),
+    onSurfaceVariant: Color(0xFFA9A9B8),
+    surfaceDim: Color(0xFF0A0A0A),
+    surfaceBright: Color(0xFF2A2A34),
+    surfaceContainerLowest: Color(0xFF0A0A0A),
+    surfaceContainerLow: Color(0xFF16161D),
     surfaceContainer: darkSurface,
-    surfaceContainerHigh: Color(0xFF2A3647),
+    surfaceContainerHigh: Color(0xFF20202A),
     surfaceContainerHighest: darkOverlay,
-    outline: Color(0xFF7C8A9E),
+    outline: Color(0xFF7E7E8E),
     outlineVariant: darkBorder,
     shadow: Color(0xFF000000),
     scrim: Color(0xFF000000),
-    inverseSurface: Color(0xFFE2E8F0),
+    inverseSurface: Color(0xFFF2F2F7),
     onInverseSurface: darkBg,
     inversePrimary: primary,
     surfaceTint: Colors.transparent,
-  );
-}
-
-/// Colors for one memory category.
-///
-/// * [base]   – saturated color: dots, icons, selected-chip fill (white text).
-/// * [tint]   – 12 % (light) / 20 % (dark) container background.
-/// * [onTint] – text/icon color that stays AA-readable on top of [tint].
-@immutable
-class AppCategoryColors {
-  const AppCategoryColors({
-    required this.base,
-    required this.tint,
-    required this.onTint,
-  });
-
-  final Color base;
-  final Color tint;
-  final Color onTint;
-
-  static const AppCategoryColors medical = AppCategoryColors(
-    base: Color(0xFF0D9488),
-    tint: Color(0x1F0D9488),
-    onTint: Color(0xFF0F766E),
-  );
-
-  static const AppCategoryColors financial = AppCategoryColors(
-    base: Color(0xFFB45309),
-    tint: Color(0x1FB45309),
-    onTint: Color(0xFF92400E),
-  );
-
-  static const AppCategoryColors family = AppCategoryColors(
-    base: Color(0xFFC2410C),
-    tint: Color(0x1FC2410C),
-    onTint: Color(0xFF9A3412),
-  );
-
-  static const AppCategoryColors friends = AppCategoryColors(
-    base: Color(0xFF4F46E5),
-    tint: Color(0x1F4F46E5),
-    onTint: Color(0xFF4F46E5),
-  );
-
-  static const AppCategoryColors personal = AppCategoryColors(
-    base: Color(0xFF7C3AED),
-    tint: Color(0x1F7C3AED),
-    onTint: Color(0xFF7C3AED),
-  );
-
-  static const AppCategoryColors other = AppCategoryColors(
-    base: Color(0xFF64748B),
-    tint: Color(0x1F64748B),
-    onTint: Color(0xFF475569),
   );
 }
 
@@ -165,7 +121,7 @@ class AppCategoryColors {
 ///
 /// * [main]        – icons, fills, borders (not guaranteed AA as small text).
 /// * [text]        – AA-safe color for text on the page background.
-/// * [container]   – soft banner / snackbar background.
+/// * [container]   – soft badge / banner / snackbar background.
 /// * [onContainer] – text on [container].
 @immutable
 class AppStatusColors {
@@ -182,6 +138,10 @@ class AppStatusColors {
   final Color onContainer;
 }
 
+/// Colors for a booking's lifecycle. Map your booking enum to these:
+/// `confirmed → success`, `pending → warning`, `upcoming → info`,
+/// `cancelled → danger`.
+///
 /// App-specific tokens that Material's [ColorScheme] has no slot for.
 /// Access with `context.appColors`.
 @immutable
@@ -191,22 +151,36 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     required this.warning,
     required this.info,
     required this.danger,
+    required this.rating,
+    required this.favorite,
+    required this.favoriteSurface,
+    required this.amenityFill,
+    required this.calendarFill,
     required this.overlaySurface,
-    required this.voiceProcessingTrack,
   });
 
   final AppStatusColors success;
   final AppStatusColors warning;
   final AppStatusColors info;
-
-  /// Voice "no match" / destructive emphasis (#DC2626 family).
   final AppStatusColors danger;
+
+  /// Rating star.
+  final Color rating;
+
+  /// Filled favorite heart.
+  final Color favorite;
+
+  /// White circle behind the heart on hotel photos.
+  final Color favoriteSurface;
+
+  /// Amenity tiles ("Free Wifi", "Free Breakfast", rating pill).
+  final Color amenityFill;
+
+  /// Calendar card background.
+  final Color calendarFill;
 
   /// Dialogs and bottom sheets.
   final Color overlaySurface;
-
-  /// Amber track that rotates around the mic button while processing.
-  final Color voiceProcessingTrack;
 
   static const AppSemanticColors light = AppSemanticColors(
     success: AppStatusColors(
@@ -222,10 +196,10 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       onContainer: Color(0xFF78350F),
     ),
     info: AppStatusColors(
-      main: Color(0xFF0284C7),
-      text: Color(0xFF0369A1),
-      container: Color(0xFFE0F2FE),
-      onContainer: Color(0xFF0C4A6E),
+      main: AppColors.primary,
+      text: AppColors.primary,
+      container: AppColors.primaryTint,
+      onContainer: Color(0xFF1B1C5E),
     ),
     danger: AppStatusColors(
       main: Color(0xFFDC2626),
@@ -233,8 +207,12 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       container: Color(0xFFFEE2E2),
       onContainer: Color(0xFF7F1D1D),
     ),
+    rating: AppColors.star,
+    favorite: AppColors.heart,
+    favoriteSurface: Color(0xFFFFFFFF),
+    amenityFill: AppColors.chipFill,
+    calendarFill: AppColors.calendarFill,
     overlaySurface: AppColors.card,
-    voiceProcessingTrack: Color(0xFFF59E0B),
   );
 
   static const AppSemanticColors dark = AppSemanticColors(
@@ -251,10 +229,10 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       onContainer: Color(0xFFFDE68A),
     ),
     info: AppStatusColors(
-      main: Color(0xFF38BDF8),
-      text: Color(0xFF7DD3FC),
-      container: Color(0xFF0C2D44),
-      onContainer: Color(0xFFBAE6FD),
+      main: Color(0xFF9B9CF2),
+      text: Color(0xFFB4B5F6),
+      container: Color(0xFF2A2B6E),
+      onContainer: AppColors.primaryTint,
     ),
     danger: AppStatusColors(
       main: Color(0xFFF87171),
@@ -262,8 +240,12 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       container: Color(0xFF3F1414),
       onContainer: Color(0xFFFECACA),
     ),
+    rating: AppColors.star,
+    favorite: Color(0xFFFF6B66),
+    favoriteSurface: Color(0xFF24242E),
+    amenityFill: Color(0xFF16161D),
+    calendarFill: AppColors.darkSurface,
     overlaySurface: AppColors.darkOverlay,
-    voiceProcessingTrack: Color(0xFFFBBF24),
   );
 
   @override
@@ -272,16 +254,24 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     AppStatusColors? warning,
     AppStatusColors? info,
     AppStatusColors? danger,
+    Color? rating,
+    Color? favorite,
+    Color? favoriteSurface,
+    Color? amenityFill,
+    Color? calendarFill,
     Color? overlaySurface,
-    Color? voiceProcessingTrack,
   }) {
     return AppSemanticColors(
       success: success ?? this.success,
       warning: warning ?? this.warning,
       info: info ?? this.info,
       danger: danger ?? this.danger,
+      rating: rating ?? this.rating,
+      favorite: favorite ?? this.favorite,
+      favoriteSurface: favoriteSurface ?? this.favoriteSurface,
+      amenityFill: amenityFill ?? this.amenityFill,
+      calendarFill: calendarFill ?? this.calendarFill,
       overlaySurface: overlaySurface ?? this.overlaySurface,
-      voiceProcessingTrack: voiceProcessingTrack ?? this.voiceProcessingTrack,
     );
   }
 
@@ -293,46 +283,7 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   }
 }
 
-/// Colors for one memory attachment file.
-/// * [base] – saturated color: dots, icons, selected-chip fill (white text).
-/// * [tint] – 12 % (light) / 20 % (dark) container background.
-@immutable
-class MemoryFileColor {
-  final Color base;
-  final Color tint;
-
-  const MemoryFileColor({
-    required this.base,
-    required this.tint,
-  });
-
-  static const MemoryFileColor pdf = MemoryFileColor(
-    base: Color(0xFFDC2626), // Crimson Red
-    tint: Color(0xFFFEE2E2), // Soft Rose
-  );
-
-  static const MemoryFileColor image = MemoryFileColor(
-    base: Color(0xFF059669), // Emerald Green
-    tint: Color(0xFFD1FAE5), // Soft Mint
-  );
-
-  static const MemoryFileColor docx = MemoryFileColor(
-    base: Color(0xFF2563EB), // Royal / Word Blue
-    tint: Color(0xFFDBEAFE), // Soft Blue
-  );
-
-  static const MemoryFileColor video = MemoryFileColor(
-    base: Color(0xFF7C3AED), // Rich Purple / Violet
-    tint: Color(0xFFEDE9FE), // Soft Lavender
-  );
-
-  static const MemoryFileColor audio = MemoryFileColor(
-    base: Color(0xFFD97706), // Warm Amber
-    tint: Color(0xFFFEF3C7), // Soft Amber
-  );
-}
-
 extension AppColorsContext on BuildContext {
-  /// Semantic + category colors for the current theme.
+  /// Semantic colors for the current theme.
   AppSemanticColors get appColors => Theme.of(this).extension<AppSemanticColors>() ?? AppSemanticColors.light;
 }
