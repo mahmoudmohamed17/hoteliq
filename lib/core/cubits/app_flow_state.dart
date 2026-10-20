@@ -1,7 +1,7 @@
 enum AppFlowState {
-  /// User has not completed onboarding yet.
-  onboarding,
+  /// User is not authenticated and needs to log in.
+  login,
 
-  /// User has completed onboarding and should land on home.
+  /// User is authenticated and should land on home.
   home,
 }

@@ -35,14 +35,13 @@ class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 12.h,
       children: [
         if (widget.label != null) ...[
-          Text(widget.label!, style: textTheme.titleSmall),
+          Text(widget.label!, style: textTheme.titleMedium),
         ],
         TextFormField(
           controller: widget.controller,
@@ -53,12 +52,9 @@ class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
           textInputAction: widget.textInputAction,
           focusNode: widget.focusNode,
           onFieldSubmitted: widget.onFieldSubmitted,
-          style: textTheme.bodyLarge,
+          style: textTheme.bodyMedium,
           decoration: InputDecoration(
             hintText: widget.hint,
-            hintStyle: textTheme.bodyLarge?.copyWith(
-              color: colorScheme.onSurface.withValues(alpha: 0.5),
-            ),
             prefixIcon: const Icon(Icons.lock_outline_rounded),
             suffixIcon: IconButton(
               onPressed: () {

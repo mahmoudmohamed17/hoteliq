@@ -33,4 +33,5 @@ abstract class AppIcons {
   static const String shop = '$_path/shop.svg';
   static const String sliders = '$_path/sliders.svg';
   static const String star = '$_path/star.svg';
+  static const String google = '$_path/google.png';
 }

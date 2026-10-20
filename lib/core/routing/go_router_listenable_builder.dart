@@ -16,8 +16,8 @@ class GoRouterListenableBuilder extends ChangeNotifier {
   }
 
   @override
-  void dispose() {
-    _subscription.cancel();
+  Future<void> dispose() async {
+    await _subscription.cancel();
     super.dispose();
   }
 }

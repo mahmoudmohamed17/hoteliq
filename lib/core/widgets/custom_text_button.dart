@@ -10,7 +10,6 @@ class CustomTextButton extends StatelessWidget {
     required this.onPressed,
     this.icon,
     this.borderRadius = 16,
-    this.fontSize,
     this.fontWeight,
     this.fontColor,
     this.width,
@@ -21,7 +20,6 @@ class CustomTextButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget? icon;
   final double borderRadius;
-  final double? fontSize;
   final FontWeight? fontWeight;
   final Color? fontColor;
   final double? width;
@@ -44,10 +42,9 @@ class CustomTextButton extends StatelessWidget {
         icon: icon,
         label: Text(
           text,
-          style: context.textTheme.titleSmall?.copyWith(
+          style: context.textTheme.labelMedium?.copyWith(
             color: fontColor,
-            fontSize: fontSize,
-            fontWeight: FontWeight.w500,
+            fontWeight: fontWeight,
           ),
         ),
       ),

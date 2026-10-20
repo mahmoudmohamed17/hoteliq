@@ -50,7 +50,7 @@ class CustomTextField extends StatelessWidget {
       spacing: 12.h,
       children: [
         if (label != null) ...[
-          Text(label!, style: textTheme.titleSmall),
+          Text(label!, style: textTheme.titleMedium),
         ],
         TextField(
           controller: controller,
@@ -64,7 +64,7 @@ class CustomTextField extends StatelessWidget {
           textInputAction: textInputAction,
           focusNode: focusNode,
           onTap: onTap,
-          style: textTheme.bodyLarge,
+          style: textTheme.bodyMedium,
           decoration: InputDecoration(
             hintText: hint,
             prefixIcon: prefixIcon,

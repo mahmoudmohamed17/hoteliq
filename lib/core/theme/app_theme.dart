@@ -145,7 +145,7 @@ abstract final class AppTheme {
 
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
-          TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
           TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
         },
       ),
@@ -200,7 +200,7 @@ abstract final class AppTheme {
           minimumSize: const Size(88, _controlHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
           shape: buttonShape,
-          textStyle: text.labelLarge,
+          textStyle: text.titleSmall,
           iconSize: 24.sp,
           backgroundColor: scheme.primary,
           foregroundColor: scheme.onPrimary,
@@ -215,7 +215,7 @@ abstract final class AppTheme {
           minimumSize: const Size(88, _controlHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
           shape: buttonShape,
-          textStyle: text.labelLarge,
+          textStyle: text.titleSmall,
           iconSize: 24.sp,
           foregroundColor: scheme.onSurface,
           disabledForegroundColor: scheme.onSurface.withValues(alpha: 0.38),
@@ -255,7 +255,7 @@ abstract final class AppTheme {
         constraints: const BoxConstraints(minHeight: _controlHeight),
         labelStyle: text.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
         floatingLabelStyle: text.bodyMedium?.copyWith(color: scheme.primary),
-        hintStyle: text.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
+        hintStyle: text.bodyMedium?.copyWith(color: scheme.onSurface.withValues(alpha: 0.50)),
         helperStyle: text.bodySmall?.copyWith(color: scheme.onSurfaceVariant),
         errorStyle: text.bodySmall?.copyWith(color: scheme.error),
         errorMaxLines: 3,

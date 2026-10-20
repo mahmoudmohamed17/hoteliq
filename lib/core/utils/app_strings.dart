@@ -45,7 +45,7 @@ abstract final class AppStrings {
   static const String passwordLabel = 'Password';
   static const String passwordHint = 'Enter your password';
   static const String forgotPassword = 'Forgot password?';
-  static const String loginButton = 'Log In';
+  static const String loginButton = 'Log in';
   static const String loginWithGoogle = 'Continue with Google';
   static const String noAccountYet = "Don't have an account? ";
   static const String loginSuccess = 'Signed in successfully. Enjoy your stay!';
@@ -90,7 +90,10 @@ abstract final class AppStrings {
   static const String nameTooShort = 'Name must be at least 3 characters';
   static const String passwordTooShort = 'Password must be at least 8 characters';
   static const String passwordNeedsNumber = 'Password must include at least one number';
+  static const String passwordNeedsUppercase = 'Password must include at least one uppercase letter';
+  static const String passwordNeedsSpecialChar = 'Password must include at least one special character';
   static const String passwordsDontMatch = 'Passwords do not match';
+  static String minLength(String fieldName, int min) => '$fieldName must be at least $min characters';
 
   // ───────────────────────── Bottom navigation ─────────────────────────
 

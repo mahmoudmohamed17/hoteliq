@@ -35,8 +35,8 @@ class SplashScreen extends StatelessWidget {
                 },
                 child: Image.asset(
                   AppImages.logo,
-                  height: 120.h,
-                  width: 120.w,
+                  height: 90.h,
+                  width: 90.w,
                 ),
               ),
               AnimatedTextKit(
@@ -46,7 +46,7 @@ class SplashScreen extends StatelessWidget {
                 animatedTexts: [
                   TyperAnimatedText(
                     AppStrings.appTagline,
-                    textStyle: context.textTheme.titleLarge!,
+                    textStyle: context.textTheme.bodyLarge!,
                     textAlign: TextAlign.center,
                   ),
                 ],
