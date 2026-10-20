@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/cubits/app_flow_cubit.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_outlined_button.dart';
-import '../../../../core/widgets/custom_password_form_field.dart';
 import '../../../../core/widgets/custom_text_button.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
-import '../../../../core/utils/validators.dart';
 import '../widgets/auth_footer.dart';
 import '../widgets/auth_header.dart';
+import '../widgets/login_form.dart';
 
 class LoginScreen extends StatefulWidget {
   const new({super.key});
@@ -34,9 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController = TextEditingController();
   }
 
-  void _validate() {
-    if (_formKey.currentState?.validate() ?? false) {}
+  void _fakeLogin() {
+    context.read<AppFlowCubit>().completeLogin();
   }
+
+  // void _validate() {
+  //   if (_formKey.currentState?.validate() ?? false) {}
+  // }
 
   @override
   void dispose() {
@@ -59,7 +63,11 @@ class _LoginScreenState extends State<LoginScreen> {
               subTitle: AppStrings.loginSubtitle,
             ),
             20.verticalSpace,
-            _form(),
+            LoginForm(
+              formKey: _formKey,
+              emailController: _emailController,
+              passwordController: _passwordController,
+            ),
             4.verticalSpace,
             Align(
               alignment: AlignmentDirectional.centerEnd,
@@ -73,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
             16.verticalSpace,
             CustomElevatedButton(
               text: AppStrings.loginButton,
-              onPressed: _validate,
+              onPressed: _fakeLogin,
             ),
             12.verticalSpace,
             CustomOutlinedButton(
@@ -93,33 +101,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _form() {
-    return Form(
-      key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 16,
-        children: [
-          CustomTextFormField(
-            controller: _emailController,
-            hint: AppStrings.emailHint,
-            label: AppStrings.emailLabel,
-            prefixIcon: const Icon(Icons.email_outlined),
-            textInputAction: TextInputAction.next,
-            validator: Validators.validateEmail,
-          ),
-          CustomPasswordFormField(
-            controller: _passwordController,
-            hint: AppStrings.passwordHint,
-            label: AppStrings.passwordLabel,
-            validator: Validators.validatePassword,
-          ),
-        ],
       ),
     );
   }

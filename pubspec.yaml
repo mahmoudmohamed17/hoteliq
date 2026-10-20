@@ -25,6 +25,7 @@ dependencies:
   get_it: ^9.3.0
   flutter_native_splash: ^2.4.8
   animated_text_kit: ^4.3.0
+  persistent_bottom_nav_bar_v2: ^6.5.0
 
 dev_dependencies:
   flutter_test:

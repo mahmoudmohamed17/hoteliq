@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
+import '../../features/main_shell/presentation/main_shell_view.dart';
 import '../../features/splash/splash_screen.dart';
 import '../cubits/app_flow_cubit.dart';
 import '../di/di.dart';
@@ -35,6 +36,10 @@ class AppRouter {
         _route(
           AppRoutes.signup,
           builder: (context, state) => const SignupScreen(),
+        ),
+        _route(
+          AppRoutes.mainShell,
+          builder: (context, state) => const MainShellView(),
         ),
       ],
     );

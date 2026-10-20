@@ -28,7 +28,7 @@ class AppFlowCubit extends Cubit<AppFlowState> {
       case AppFlowState.login:
         return AppRoutes.login;
       case AppFlowState.home:
-        return AppRoutes.home;
+        return AppRoutes.mainShell;
     }
   }
 
@@ -55,7 +55,7 @@ class AppFlowCubit extends Cubit<AppFlowState> {
       case AppFlowState.home:
         // Guard: authenticated → never show login or signup again.
         if (currentPath == AppRoutes.login || currentPath == AppRoutes.signup) {
-          return AppRoutes.home;
+          return AppRoutes.mainShell;
         }
         return null;
     }

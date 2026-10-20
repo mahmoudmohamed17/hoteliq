@@ -4,11 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../../../core/widgets/custom_password_form_field.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
-import '../../../../core/utils/validators.dart';
 import '../widgets/auth_footer.dart';
 import '../widgets/auth_header.dart';
+import '../widgets/signup_form.dart';
 
 class SignupScreen extends StatefulWidget {
   const new({super.key});
@@ -60,7 +58,13 @@ class _SignupScreenState extends State<SignupScreen> {
               subTitle: AppStrings.signupSubtitle,
             ),
             20.verticalSpace,
-            _form(),
+            SignupForm(
+              formKey: _formKey,
+              nameController: _nameController,
+              emailController: _emailController,
+              passwordController: _passwordController,
+              confirmPasswordController: _confirmPasswordController,
+            ),
             24.verticalSpace,
             CustomElevatedButton(
               text: AppStrings.signupButton,
@@ -74,50 +78,6 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _form() {
-    return Form(
-      key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 16,
-        children: [
-          CustomTextFormField(
-            controller: _nameController,
-            hint: AppStrings.fullNameHint,
-            label: AppStrings.fullNameLabel,
-            prefixIcon: const Icon(Icons.person_outline),
-            textInputAction: TextInputAction.next,
-            validator: Validators.validateName,
-          ),
-          CustomTextFormField(
-            controller: _emailController,
-            hint: AppStrings.emailHint,
-            label: AppStrings.emailLabel,
-            prefixIcon: const Icon(Icons.email_outlined),
-            textInputAction: TextInputAction.next,
-            validator: Validators.validateEmail,
-          ),
-          CustomPasswordFormField(
-            controller: _passwordController,
-            hint: AppStrings.passwordHint,
-            label: AppStrings.passwordLabel,
-            validator: Validators.validatePassword,
-          ),
-          CustomPasswordFormField(
-            controller: _confirmPasswordController,
-            hint: AppStrings.confirmPasswordHint,
-            label: AppStrings.confirmPasswordLabel,
-            validator: (value) => Validators.validateConfirmPassword(
-              _passwordController.text,
-              value,
-            ),
-          ),
-        ],
       ),
     );
   }
