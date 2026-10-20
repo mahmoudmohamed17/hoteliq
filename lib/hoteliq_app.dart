@@ -16,6 +16,7 @@ class HoteliqApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
+          themeMode: ThemeMode.light,
           themeAnimationDuration: const Duration(milliseconds: 1500),
           themeAnimationCurve: Curves.fastOutSlowIn,
           routerConfig: AppRouter.router,
