@@ -3,6 +3,7 @@ abstract class AppImages {
 
   static const String _path = 'assets/images';
 
+  static const String logo = '$_path/logo.png';
   static const String dummyPic1 = '$_path/dummy_pic1.png';
   static const String dummyPic2 = '$_path/dummy_pic2.png';
   static const String dummyPic3 = '$_path/dummy_pic3.png';
