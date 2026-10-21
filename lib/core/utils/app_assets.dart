@@ -23,7 +23,9 @@ abstract class AppIcons {
   static const String calendar = '$_path/calendar.svg';
   static const String heart = '$_path/heart.svg';
   static const String home = '$_path/home.svg';
-  static const String house = '$_path/house.svg';
+  static const String hotel = '$_path/hotel.svg';
+  static const String apartment = '$_path/apartment.svg';
+  static const String homestay = '$_path/homestay.svg';
   static const String location = '$_path/location.svg';
   static const String more = '$_path/more.svg';
   static const String notificationBell = '$_path/notification-bell.svg';

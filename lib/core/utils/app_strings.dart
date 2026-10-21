@@ -109,6 +109,7 @@ abstract final class AppStrings {
   // Home screen: search and category chips
   static const String homeGreeting = 'Where to next?';
   static const String searchHint = 'Search hotels, cities or places';
+  static const String currentLocation = 'Current location';
   static const String categoryHotel = 'Hotel';
   static const String categoryHomestay = 'Homestay';
   static const String categoryApartment = 'Apartment';
