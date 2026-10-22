@@ -129,6 +129,7 @@ abstract final class AppStrings {
   // ───────────────────────── Hotel details ─────────────────────────
 
   // Hotel details screen: section titles
+  static const String detail = 'Detail';
   static const String description = 'Description';
   static const String preview = 'Preview';
   static const String facilities = 'Facilities';
