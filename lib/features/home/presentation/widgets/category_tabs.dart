@@ -33,6 +33,7 @@ class _CategoryTabsState extends State<CategoryTabs> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
+      clipBehavior: Clip.none,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         spacing: 12,

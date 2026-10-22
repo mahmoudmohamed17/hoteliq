@@ -100,7 +100,7 @@ abstract final class AppStrings {
   // Bottom navigation bar tabs
   static const String navHome = 'Home';
   static const String navSaved = 'Saved';
-  static const String navBookings = 'Bookings';
+  static const String navSchedule = 'Schedule';
   static const String navFavorites = 'Favorites';
   static const String navProfile = 'Profile';
 

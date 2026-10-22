@@ -8,8 +8,6 @@ class CustomHeartButton extends StatefulWidget {
   final VoidCallback? onTap;
   final ValueChanged<bool>? onChanged;
   final double? size;
-  final Color? activeColor;
-  final Color? inactiveColor;
 
   const CustomHeartButton({
     super.key,
@@ -17,8 +15,6 @@ class CustomHeartButton extends StatefulWidget {
     this.onTap,
     this.onChanged,
     this.size,
-    this.activeColor,
-    this.inactiveColor,
   });
 
   @override
@@ -92,8 +88,8 @@ class _CustomHeartButtonState extends State<CustomHeartButton> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = widget.activeColor ?? context.appColors.favorite;
-    final inactiveColor = widget.inactiveColor ?? context.colorScheme.outline;
+    final activeColor = context.appColors.favorite;
+    final inactiveColor = context.colorScheme.outlineVariant;
 
     return GestureDetector(
       onTap: _toggle,

@@ -26,7 +26,7 @@ class MainShellView extends StatelessWidget {
           screen: (context) => const Placeholder(),
           icon: _icon(AppIcons.calendar, color: context.colorScheme.primary),
           inactiveIcon: _icon(AppIcons.calendar, color: context.colorScheme.onSurfaceVariant),
-          title: AppStrings.navBookings,
+          title: AppStrings.navSchedule,
         ),
         _tab(
           context,
