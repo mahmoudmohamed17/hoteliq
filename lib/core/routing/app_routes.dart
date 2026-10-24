@@ -5,4 +5,5 @@ abstract class AppRoutes {
   static const String signup = '/signup';
   static const String mainShell = '/main_shell';
   static const String hotelDetails = '/hotel_details';
+  static const String profile = '/profile';
 }

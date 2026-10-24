@@ -5,6 +5,7 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/hotel_details/presentation/screens/hotel_details_screen.dart';
 import '../../features/main_shell/presentation/main_shell_view.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/splash/splash_screen.dart';
 import '../cubits/app_flow_cubit.dart';
 import '../di/di.dart';
@@ -45,6 +46,10 @@ class AppRouter {
         _route(
           AppRoutes.hotelDetails,
           builder: (context, state) => const HotelDetailsScreen(),
+        ),
+        _route(
+          AppRoutes.profile,
+          builder: (context, state) => const ProfileScreen(),
         ),
       ],
     );

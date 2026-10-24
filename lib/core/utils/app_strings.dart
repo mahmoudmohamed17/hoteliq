@@ -202,7 +202,7 @@ abstract final class AppStrings {
   // ───────────────────────── Profile ─────────────────────────
 
   // Profile screen
-  static const String profileTitle = 'My Profile';
+  static const String myProfile = 'My Profile';
   static const String editProfile = 'Edit Profile';
   static const String myBookings = 'My Bookings';
   static const String paymentMethods = 'Payment Methods';
@@ -217,9 +217,7 @@ abstract final class AppStrings {
 
   // Settings screen
   static const String settingsTitle = 'Settings';
-  static const String language = 'Language';
   static const String darkMode = 'Dark mode';
-  static const String pushNotifications = 'Push notifications';
   static const String changePassword = 'Change password';
   static const String deleteAccount = 'Delete account';
   static const String deleteAccountWarning = 'This will permanently remove your account and booking history.';

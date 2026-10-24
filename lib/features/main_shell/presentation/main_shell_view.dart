@@ -6,6 +6,7 @@ import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../core/utils/extensions.dart';
 import '../../home/presentation/screens/home_screen.dart';
+import '../../profile/presentation/screens/profile_screen.dart';
 
 class MainShellView extends StatelessWidget {
   const new({super.key});
@@ -37,7 +38,7 @@ class MainShellView extends StatelessWidget {
         ),
         _tab(
           context,
-          screen: (context) => const Placeholder(),
+          screen: (context) => const ProfileScreen(),
           icon: _icon(AppIcons.profile, color: context.colorScheme.primary),
           inactiveIcon: _icon(AppIcons.profile, color: context.colorScheme.onSurfaceVariant),
           title: AppStrings.navProfile,
