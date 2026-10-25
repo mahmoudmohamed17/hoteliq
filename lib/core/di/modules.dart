@@ -15,6 +15,7 @@ abstract class Modules {
   SupabaseClient get supabaseClient => Supabase.instance.client;
 
   @preResolve
+  @singleton
   Future<GoogleSignIn> get googleSignIn async {
     final instance = GoogleSignIn.instance;
     await instance.initialize(serverClientId: AppConfig.instance.webClientId);
