@@ -8,4 +8,4 @@ final GetIt getIt = GetIt.instance;
 @InjectableInit(
   preferRelativeImports: true,
 )
-void configureDependencies() async => await getIt.init();
+Future<void> configureDependencies() async => await getIt.init();
