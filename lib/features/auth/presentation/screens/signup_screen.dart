@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../core/widgets/custom_outlined_button.dart';
 import '../widgets/auth_footer.dart';
 import '../widgets/auth_header.dart';
+import '../widgets/or_widget.dart';
 import '../widgets/signup_form.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -70,7 +73,19 @@ class _SignupScreenState extends State<SignupScreen> {
               text: AppStrings.signupButton,
               onPressed: _validate,
             ),
-            34.verticalSpace,
+            24.verticalSpace,
+            const OrWidget(),
+            24.verticalSpace,
+            CustomOutlinedButton(
+              text: AppStrings.loginWithGoogle,
+              onPressed: () {},
+              icon: Image.asset(
+                AppIcons.google,
+                height: 20.h,
+                width: 20.w,
+              ),
+            ),
+            36.verticalSpace,
             AuthFooter(
               question: AppStrings.haveAccountAlready,
               actionText: AppStrings.loginButton,

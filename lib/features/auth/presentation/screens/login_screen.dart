@@ -14,6 +14,7 @@ import '../../../../core/widgets/custom_text_button.dart';
 import '../widgets/auth_footer.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/login_form.dart';
+import '../widgets/or_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const new({super.key});
@@ -83,7 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
               text: AppStrings.loginButton,
               onPressed: _fakeLogin,
             ),
-            12.verticalSpace,
+            24.verticalSpace,
+            const OrWidget(),
+            24.verticalSpace,
             CustomOutlinedButton(
               text: AppStrings.loginWithGoogle,
               onPressed: () {},
@@ -93,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 20.w,
               ),
             ),
-            34.verticalSpace,
+            48.verticalSpace,
             AuthFooter(
               question: AppStrings.noAccountYet,
               actionText: AppStrings.signupButton,

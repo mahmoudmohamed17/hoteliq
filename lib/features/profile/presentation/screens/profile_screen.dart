@@ -5,6 +5,7 @@ import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../domain/models/profile_tile_model.dart';
 import '../wigdets/profile_card.dart';
+import '../wigdets/profile_tile.dart';
 
 class ProfileScreen extends StatelessWidget {
   const new({super.key});
@@ -31,13 +32,12 @@ class ProfileScreen extends StatelessWidget {
                 tiles.length,
                 (index) {
                   final tile = tiles[index];
-                  return _tile(context, model: tile);
+                  return ProfileTile(model: tile);
                 },
               ),
             ),
             Divider(height: 32.h),
-            _tile(
-              context,
+            ProfileTile(
               model: lastTile,
               showTrailing: false,
               contentColor: context.colorScheme.error,
@@ -45,33 +45,6 @@ class ProfileScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _tile(BuildContext context, {required ProfileTileModel model, bool showTrailing = true, Color? contentColor}) {
-    return ListTile(
-      onTap: model.onTap,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
-      ),
-      leading: Icon(
-        model.icon,
-        color: contentColor,
-      ),
-      title: Text(
-        model.title,
-        style: context.textTheme.titleSmall?.copyWith(
-          color: contentColor,
-          fontWeight: showTrailing ? null : FontWeight.bold,
-        ),
-      ),
-      trailing: showTrailing
-          ? Icon(
-              Icons.arrow_forward_ios,
-              size: 16.sp,
-              color: context.colorScheme.outline.withValues(alpha: 0.50),
-            )
-          : null,
     );
   }
 }

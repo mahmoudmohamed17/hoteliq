@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/cubits/app_flow_cubit.dart';
 import '../../../../core/utils/app_strings.dart';
 
 class ProfileTileModel {
@@ -36,10 +38,14 @@ class ProfileTileModel {
         icon: Icons.settings,
         onTap: () {},
       ),
+
+      // TODO: Implement logout logic later
       ProfileTileModel(
         title: AppStrings.logout,
         icon: Icons.logout_outlined,
-        onTap: () {},
+        onTap: () {
+          context.read<AppFlowCubit>().logout();
+        },
       ),
     ];
   }

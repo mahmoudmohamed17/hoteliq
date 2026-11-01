@@ -74,4 +74,3 @@ class AppFlowCubit extends Cubit<AppFlowState> {
     emit(AppFlowState.login);
   }
 }
-

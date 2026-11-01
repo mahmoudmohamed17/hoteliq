@@ -22,7 +22,7 @@ class AuthFooter extends StatelessWidget {
       children: [
         Text(
           question,
-          style: context.textTheme.labelMedium?.copyWith(
+          style: context.textTheme.labelLarge?.copyWith(
             color: context.colorScheme.outline,
           ),
         ),
@@ -30,7 +30,7 @@ class AuthFooter extends StatelessWidget {
           onTap: onActionTap,
           child: Text(
             actionText,
-            style: context.textTheme.labelMedium?.copyWith(
+            style: context.textTheme.labelLarge?.copyWith(
               color: context.colorScheme.primary,
               fontWeight: FontWeight.w600,
             ),
