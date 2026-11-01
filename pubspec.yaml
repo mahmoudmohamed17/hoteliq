@@ -30,11 +30,14 @@ dependencies:
   supabase_flutter: ^2.18.3
   flutter_dotenv: ^6.0.1
   google_sign_in: ^7.2.0
+  json_annotation: ^4.12.0
+  animations: ^3.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  json_serializable: ^6.15.2
   flutter_lints: ^6.0.0
   build_runner: ^2.4.15
   injectable_generator: ^3.1.3

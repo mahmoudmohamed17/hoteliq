@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/home_app_bar.dart';
-import '../widgets/category_tabs.dart';
 import '../widgets/near_hotels_widget.dart';
+import '../widgets/open_search_widget.dart';
 import '../widgets/popular_hotels_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             const HomeAppBar(),
             24.verticalSpace,
-            const CategoryTabs(),
+            const OpenSearchWidget(),
             24.verticalSpace,
             const NearHotelsWidget(),
             24.verticalSpace,

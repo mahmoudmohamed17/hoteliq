@@ -45,7 +45,7 @@ class HotelDetailsScreen extends StatelessWidget {
   }
 }
 
-// TODO: Delete this later...
+// TODO: Delete this description later...
 const dummyDescription = '''
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 ''';
